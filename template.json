@@ -1,0 +1,11 @@
+{
+  "name": "cours-economie-elearning",
+  "version": "1.0.0",
+  "description": "Site HTML/CSS/JS statique pour cours",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Static site, nothing to run'"
+  },
+  "author": "",
+  "license": "ISC"
+}
