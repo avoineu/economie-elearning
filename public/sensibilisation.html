@@ -2,186 +2,315 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sensibilisation au Phishing</title>
     <style>
         :root {
             --primary: #0a4a91;
-            --secondary: #e8f1fb;
+            --secondary: #f5f7fa;
             --accent: #ff9800;
             --danger: #d9534f;
+            --alert: #e81123;
+            --ok: #0d7c44;
             --text-dark: #1a1a1a;
             --text-light: #555;
+            --bg-soft: #ffffff;
         }
         body {
             font-family: "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
             background: var(--secondary);
             color: var(--text-dark);
+            line-height: 1.5;
         }
         header {
-            background: linear-gradient(135deg, #053b75, #0a4a91);
-            color: white;
-            padding: 60px 20px;
+            background: #ffecec; /* Rouge clair uniforme */
+            padding: 70px 20px 40px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
         }
-        header h1 {
-            font-size: 2.8rem;
-            margin: 0;
+        .alert-title {
+            margin: 0 0 16px;
+            font-size: clamp(2.3rem, 5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--alert);
+            letter-spacing: -1px;
         }
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .intro-lead {
+            max-width: 900px;
+            margin: 0 auto 12px;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            font-weight: 600;
         }
-        section {
-            padding: 40px 20px;
-            max-width: 1000px;
+        .intro-sub {
+            max-width: 860px;
+            margin: 0 auto;
+            font-size: .95rem;
+            color: var(--text-light);
+        }
+        .badge-row {
+            margin-top: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .badge {
+            background: var(--primary);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: .75rem;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0,0,0,.15);
+        }
+        main {
+            padding: 10px 20px 60px;
+            max-width: 1080px;
             margin: auto;
         }
+        .grid {
+            display: grid;
+            gap: 32px;
+        }
+        @media (min-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
         .card {
-            background: white;
-            padding: 30px;
-            margin: 30px 0;
-            border-radius: 16px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            background: var(--bg-soft);
+            padding: 26px 26px 30px;
+            margin: 0;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px -6px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e7ecf2;
+            transition: transform .25s, box-shadow .25s;
         }
-        .card:hover {
-            transform: translateY(-4px);
-        }
-        h2 {
+        .card:hover { transform: translateY(-6px); box-shadow: 0 10px 26px -6px rgba(0,0,0,0.12); }
+        .card h2 {
+            margin: 0 0 14px;
+            font-size: 1.35rem;
             color: var(--primary);
-            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .visual-example {
-            background: #fff7e6;
-            border-left: 5px solid var(--accent);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-        .visual-example img {
-            width: 100%;
-            border-radius: 10px;
-            margin-top: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        ul li {
-            margin: 10px 0;
-        }
-        .danger-box {
-            background: #ffecec;
-            border-left: 5px solid var(--danger);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        footer {
-            text-align: center;
-            padding: 25px;
-            background: #d9e3ef;
-            font-size: 0.9rem;
+        .card h2 span.icon { font-size: 1.3rem; }
+        p { margin: 0 0 14px; }
+        p + p { margin-top: -4px; }
+        ul { margin: 0; padding-left: 20px; }
+        ul li { margin: 6px 0; }
+        .inline-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .inline-list li { background: #f0f4f9; padding: 6px 10px; border-radius: 6px; font-size: .8rem; }
+        .highlight-box { background: #fff5f5; border-left: 6px solid var(--alert); padding: 16px 18px; border-radius: 12px; margin: 18px 0; }
+        .info-box { background: #eef9f3; border-left: 6px solid var(--ok); padding: 16px 18px; border-radius: 12px; margin: 18px 0; }
+        .example-box, .visual-example { background: #fff7e6; border-left: 6px solid var(--accent); padding:16px 18px; border-radius: 12px; margin: 18px 0; }
+        .visual-example { overflow:hidden; }
+        .visual-example img { max-width:650px; width:100%; height:auto; display:block; margin:12px auto 6px; object-fit:contain; }
+        figure { margin: 0; }
+        figure img { width:100%; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,.12); }
+        figure figcaption { font-size:.75rem; text-align:center; margin-top:6px; color: var(--text-light); }
+        .quiz { margin: 6px 0 0; }
+        .quiz-card { background:#ffffff; border:1px solid #dbe3ea; padding:22px 22px 10px; border-radius:18px; box-shadow:0 6px 18px -6px rgba(0,0,0,.08); }
+        .quiz-card h3 { margin:0 0 12px; font-size:1.1rem; display:flex; align-items:center; gap:8px; }
+        .question { margin-bottom: 18px; }
+        .question p { font-weight:600; margin:0 0 6px; }
+        .question label { display:block; font-size:.9rem; padding:4px 0; cursor:pointer; }
+        .feedback { font-size:.85rem; font-weight:600; margin-top:6px; }
+        .feedback.ok { color: var(--ok); }
+        .feedback.ko { color: var(--alert); }
+        button.reveal { background: var(--primary); color:#fff; border:none; padding:10px 18px; font-size:.85rem; border-radius:8px; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.15); }
+        button.reveal:hover { background:#083e74; }
+        .collapse-toggle { background:none; border:none; color: var(--primary); font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; margin: 0 0 14px; }
+        .hidden { display:none; }
+        footer { text-align:center; padding:30px 20px; font-size:.8rem; background:#f0f4f7; margin-top:40px; }
+        .attribution { font-size:.75rem; opacity:.8; }
+        .tags { margin-top: 6px; font-size: .65rem; letter-spacing: .5px; color: var(--text-light); }
+        .sep { margin: 34px auto; height: 2px; width: 80px; background: linear-gradient(90deg, transparent, var(--primary), transparent); border-radius: 2px; }
+        @media (max-width: 700px) {
+            header { padding: 60px 18px 34px; }
+            .alert-title { font-size: 2.1rem; }
+            .card { padding:20px 18px; }
         }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Sensibilisation au Phishing</h1>
-    <p>Une campagne pédagogique pour comprendre, reconnaître et éviter les attaques en ligne</p>
-</header>
-
-<section>
-    <div class="card">
-        <h2>Une expérience dans le cadre du cours</h2>
-        <p>
-            Si vous êtes arrivé sur cette page, c’est que vous avez probablement cliqué sur un lien qui semblait légitime. Félicitations : vous venez de participer à une <strong>mise en situation de phishing</strong> réalisée dans le cadre du cours de cybersécurité.
-
-              Cette activité est menée dans le cadre de notre formation en 2ᵉ master en informatique, au sein du laboratoire de cybersécurité, sous la supervision de Monsieur Fockedey.
-              Le but de cet exercice était de vous piéger en vous envoyant un faux mail suffisamment crédible pour vous inciter à cliquer, et ainsi analyser combien de personnes seraient susceptibles de tomber dans le piège.
-
-              Cette mise en situation vise avant tout à vous sensibiliser aux risques réels du phishing, une menace particulièrement fréquente et dangereuse. Une analyse et une explication détaillée vous seront fournies par la suite afin de renforcer vos réflexes de sécurité.
-
-              Notre groupe, chargé de concevoir cette simulation, est composé de Samir, Ayoub, Haitam, Loric et Abdelbadi.
-        </p>
-        <p>
-            Aucun risque ici : aucune donnée n’a été enregistrée. Cette page existe uniquement pour vous apprendre à
-            reconnaître les pièges qui, dans un vrai contexte, pourraient avoir des conséquences graves.
-        </p>
-    </div>
-
-    <div class="card">
-        <h2>Qu'est-ce que le phishing ?</h2>
-        <p>
-            Le phishing (ou hameçonnage) est une technique utilisée par des cybercriminels pour voler vos informations
-            personnelles en vous incitant à cliquer sur un lien ou à saisir vos identifiants sur une fausse page.
-        </p>
-
-        <div class="visual-example">
-            <strong>Exemple visuel :</strong>
-            <p>Voici un exemple typique de faux email :</p>
-            <img src="https://www.emarketerz.fr/wp-content/uploads/2024/03/analyse-e-mail-phishing-indices.jpg">
+    <header>
+        <h1 class="alert-title">Tu viens de te faire prendre ton mot de passe !</h1>
+        <p class="intro-lead">Respire, pas de panique : <strong>c'était un exercice pédagogique</strong>. Aucune donnée n'a été enregistrée.</p>
+        <p class="intro-sub">Tu viens sans le savoir de participer à une campagne de sensibilisation au phishing dans le cadre du cours de cybersécurité de Master 2 informatique donné par Monsieur Fockedey. Le but ? Te montrer à quel point un message crédible peut te pousser à cliquer et t'amener sur une page de collecte factice. Cette mise en situation vise avant tout à te sensibiliser aux risques réels du phishing, une menace particulièrement fréquente et dangereuse. Une analyse et une explication détaillée de ce qu'est le phishing est fournie par la suite afin de renforcer tes réflexes de sécurité. Notre groupe, chargé de concevoir cette simulation, est composé de Abdelbadi, Ayoub, Haitam, Loric et Samir</p>
+        <div class="badge-row">
+            <span class="badge">Exercice de simulation</span>
+            <span class="badge">Aucune donnée n'a été stockée</span>
+            <span class="badge">Objectif: Te mettre en garde</span>
         </div>
-    </div>
-
-    <div class="card">
-        <h2>Les risques associés</h2>
-        <div class="danger-box">
-            <strong>Une attaque réelle pourrait entraîner :</strong>
-            <ul>
-                <li>Vol de mots de passe (messagerie, ENT, réseaux sociaux…)</li>
-                <li>Usurpation d'identité</li>
-                <li>Accès à vos fichiers ou comptes scolaires</li>
-                <li>Arnaques financières</li>
-                <li>Propagation de logiciels malveillants</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>Comment repérer une tentative de phishing ?</h2>
-        <ul>
-            <li><strong>Regarder l’adresse email</strong> de l’expéditeur : souvent approximative ou suspecte.</li>
-            <li><strong>Analyser le lien</strong> avant de cliquer (placer la souris dessus pour voir l’URL réelle).</li>
-            <li><strong>Méfiez-vous des urgences</strong> : "Votre compte sera supprimé dans 24h".</li>
-            <li><strong>Erreurs de grammaire</strong> ou de traduction dans le contenu.</li>
-            <li><strong>Demande d'informations sensibles</strong> non justifiée.</li>
-        </ul>
-
-        <div class="visual-example">
+        <div style="margin-top:10px;font-size:.7rem;color:var(--text-light);">*Ton mot de passe réel n'a PAS été capturé, mais tu as validé qu'une page factice pouvait te faire agir.</div>
+    </header>
+    <main>
+        <div class="grid">
+            <div class="card" id="ce-qui-sest-passe">
+                <h2>Ce qui vient de se passer ?</h2>
+                <p>Tu as cliqué sur un lien paraissant légitime car il semblait venir de Monsieur Melotte et tu as alors atteint une fausse interface ressemblant à celle de Microsoft, étant dans une interface proche de ce que tu as l'habitude de voir tu n'a pas remis en question la fiabilité du site. Ce scénario met en évidence à quel point il est facile de t'induire en erreur. Il nous a  suffit d'immiter des interfaces que tu as l'habitude de voir et de légèrement se renseigner sur toi, en tant qu'étudiant de l'ecam dans ce cas.</p>
+                <div class="highlight-box">
+                    <strong>Pourquoi tu as cliqué ?</strong>
+                    <ul>
+                        <li>Confiance dans l'identité apparente de l'expéditeur (Monsieur Melotte)</li>
+                        <li>Design familier + absence d'erreurs flagrantes (Interface Microsoft)</li>
+                        <li>Curiosité ou automatisme de routine (Reçu directement dans ton mail de l'ecam)</li>
+                    </ul>
+                </div>
+                <p>Aujourd'hui c'était un test bienveillant. Demain cela peut être malveillant.</p>
+            </div>
+            <div class="card" id="definition">
+                <h2>Le phishing en bref</h2>
+                <p><strong>Phishing =</strong> technique d'<em>hameçonnage</em> visant à te redriger vers un lien malveillant (lien url ou QR code) et de te faire fournir volontairement des informations sur toi (identifiants, mots de passe, données bancaires) sur une fausse page ou d'infecter ton système, souvent immitant une page que tu as l'habitude de voir.</p>
+                <div class="example-box">
+                    <strong>Indices typiques d'email de phishing :</strong>
+                    <ul>
+                        <li>Adresse émetteur légèrement modifiée</li>
+                        <li>Liens raccourcis ou domaine inconnu</li>
+                        <li>Urgence artificielle (« action immédiate »)</li>
+                        <li>Incohérences visuelles (logo flou, alignements)</li>
+                        <li>Formulations génériques ("Cher utilisateur")</li>
+                        <li>Utilisation de beaucoup de données que tu ne penserais pas que des personnes malveillantes pourraient obtenir</li>
+                        <li>Présence de fautes d'orthographes</li>
+                        <li>Gain inattendu (promesses de récompenses, ...)</li>
+                    </ul>
+                </div>
+                                <figure>
+                    <img alt="Exemple email phishing" src="https://www.emarketerz.fr/wp-content/uploads/2024/03/analyse-e-mail-phishing-indices.jpg" />
+                    <figcaption>Exemple d'email : zones d'alerte mises en évidence.</figcaption>
+                </figure>
+                <p>Attention, le phishing n'existe pas uniquement sous forme d'email. Il est également possible de dissimuler des liens malveillants à l'aide de QR code (qu'on peut même trouver dans la rue !) ou encore de fausses pubs sur le web, ... Reste sur tes gardes en permanence ! </p>
+            </div>
+            <div class="card" id="indices">
+                <h2>Comment le repérer rapidement ?</h2>
+                <ul>
+                    <li><strong>Inspecte toujours l'URL</strong> avant de cliquer !!!</li>
+                    <li><strong>Inspecte le domaine</strong> après le chargement (orthographe exacte? parfois une lettre suffit pour semer le confusion. Par exemple ; ecarn =/= ecam ).</li>
+                    <li><strong>Demande d'infos sensibles ?</strong> Tu dois immédiatement te méfier !</li>
+                    <li><strong>Pression temporelle ?</strong> Redouble de vigilance !</li>
+                    <li><strong>Mélange langues / fautes</strong> = copie approximative.</li>
+                    <li><strong>Méfie toi des urgences</strong> "Votre compte sera supprimé dans moins de 24h"</li>
+                </ul>
+                <div class="visual-example">
             <strong>Exemple visuel :</strong>
-            <p>Une fausse page de connexion qui imite un service officiel :</p>
+            <p>Une fausse page de connexion qui imite le site de login Microsoft :</p>
             <p> => Ici le lien de la page n'est pas un lien officiel !!!!</p>
             <img src="https://media.kasperskydaily.com/wp-content/uploads/sites/93/2021/05/07134957/office-365-phishing-via-gdocs-office-login.jpg">
         </div>
-    </div>
 
-    <div class="card">
-        <h2>Comment vous protéger facilement ?</h2>
-        <ul>
-            <li>Ne jamais saisir ses identifiants via un lien reçu dans un email.</li>
-            <li>Accéder au site en tapant l’adresse manuellement.</li>
-            <li>Activer l’authentification à deux facteurs sur les comptes importants.</li>
-            <li>Utiliser un gestionnaire de mots de passe (il détecte les faux sites).</li>
-            <li>En cas de doute, demander à un professeur ou un administrateur réseau.</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h2>Conclusion</h2>
-        <p>
-            Vous venez de vivre une situation typique. Cette expérience a pour but de vous rendre plus attentifs et
-            autonomes face aux risques numériques. Les cyberattaques ne préviennent pas : plus vous êtes informés,
-            mieux vous vous protégez.
-        </p>
-    </div>
-</section>
-
-<footer>
-    © 2025 — Campagne pédagogique contre le phishing
-</footer>
-
+            </div>
+            <div class="card" id="risques">
+                <h2>Les risques associés</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Vol de ton mot de passe :</strong> il se connecte à tes comptes à ta place.</li>
+                        <li><strong>Usurpation d'identité :</strong> il envoie des messages à tes contacts en te faisant passer pour l'expéditeur. (Et potentiellement s'attaque à eux par après...)</li>
+                        <li><strong>Accès à tes fichiers :</strong> récupération de tes documents personnels, photos,...</li>
+                        <li><strong>Arnaques financières :</strong> demandes de faux paiements, redirection vers des pages bancaires frauduleuses.</li>
+                        <li><strong>Infection de ton ordinateur :</strong> installation de programmes malveillants (ex: un logiciel qui bloque tes fichiers et réclame une rançon).</li>
+                    </ul>
+                </div>
+                <p><strong>À retenir :</strong> souvent, tout commence par un simple clic sur un lien qui paraissait normal.</p>
+            </div>
+            <div class="card" id="protection">
+                <h2>Comment te protéger de ça ?</h2>
+                <div class="info-box">
+                    <ul>
+                        <li>Ne pas cliquer directement depuis un mail suspect, ouvrir le site manuellement.</li>
+                        <li>Active l'<strong>authentification multi-facteurs (2FA)</strong> dés que tu peux.</li>
+                        <li>Utilise un <strong>gestionnaire de mots de passe</strong> (il refuse les domaines différents).</li>
+                        <li>Signale toujours les tentatives douteuses ! (Un enseignant ou l'admin réseau pour le cas de l'ecam).</li>
+                        <li>Mettre à jour ton navigateur & extensions sécurité. (Souvent les navigateurs)</li>
+                    </ul>
+                </div>
+                <p><strong>Réflexe mental :</strong> « Ce message me pousse-t-il à agir vite ? Ce message me pousse-t-il à donner des informations personnelles ? Si oui, je ralentis. »</p>
+            </div>
+            <div class="card" id="quiz">
+                <h2>Mini quiz express</h2>
+                <button class="collapse-toggle" id="toggleQuiz">▶ Afficher / Masquer le quiz</button>
+                <div class="quiz hidden" id="quizBody">
+                    <div class="quiz-card">
+                        <h3>Quelques questions pour vérifier que tu as retenu l'essentiel</h3>
+                        <div class="question" data-answer="b">
+                            <p>1. Le premier réflexe avant de saisir des identifiants sur une page reçue par mail ?</p>
+                            <label><input type="radio" name="q1" value="a" /> Se fier au logo</label>
+                            <label><input type="radio" name="q1" value="b" /> Vérifier l'URL et le domaine</label>
+                            <label><input type="radio" name="q1" value="c" /> Répondre pour demander confirmation</label>
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="question" data-answer="c">
+                            <p>2. Un mail mentionne une suppression immédiate de compte si pas d'action en 30 min :</p>
+                            <label><input type="radio" name="q2" value="a" /> Probable mise à jour légale</label>
+                            <label><input type="radio" name="q2" value="b" /> Juste un design agressif</label>
+                            <label><input type="radio" name="q2" value="c" /> Technique classique de phishing (urgence)</label>
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="question" data-answer="a">
+                            <p>3. Le gestionnaire de mots de passe aide car :</p>
+                            <label><input type="radio" name="q3" value="a" /> Il n'autocomplète que sur le domaine exact attendu</label>
+                            <label><input type="radio" name="q3" value="b" /> Il bloque tous les sites inconnus automatiquement</label>
+                            <label><input type="radio" name="q3" value="c" /> Il supprime les mails suspects</label>
+                            <div class="feedback"></div>
+                        </div>
+                        <div class="question" data-answer="c">
+                            <p>4. J'ai détecté un site de phishing, que dois-je faire ?</p>
+                            <label><input type="radio" name="q4" value="a" /> Rien, fermer l'onglet suffit</label>
+                            <label><input type="radio" name="q4" value="b" /> Bloquer la source seulement</label>
+                            <label><input type="radio" name="q4" value="c" /> Alerter immédiatement un responsable IT / support</label>
+                            <div class="feedback"></div>
+                        </div>
+                        <button class="reveal" id="checkQuiz">Vérifier mes réponses</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" id="conclusion">
+                <h2>Conclusion & suite</h2>
+                <p>Tu viens de vivre une situation contrôlée dont le seul objectif est d'améliorer tes <strong>réflexes numériques</strong>. Chaque fois que tu ressens une pression ou une urgence numérique : ralentis, vérifie, compare.</p>
+                <p>Cette page existe pour t'expliquer ce qu'est le phishing et t'aider à adopter les bons réflexes avant de croiser de véritables acteurs malveillants.</p>
+                <div class="info-box">
+                    <strong>Retiens :</strong>
+                    <ul>
+                        <li>Le design ressemble ➜ <em>ce n'est pas une preuve</em>.</li>
+                        <li>La source d'envoie parait fiable ➜ <em>cela ne suffit pas, vérifie !</em></li>
+                        <li>L'urgence ➜ <em>souvent pour te faire agir sous la précipitation</em>.</li>
+                        <li>Le doute ➜ <em>ton meilleur allié</em>.</li>
+                    </ul>
+                </div>
+                <p class="attribution">Groupe (M2 Informatique) : Abdelbadi – Ayoub – Haitam – Loric – Samir.</p>
+                <p style="font-size:.7rem;color:var(--text-light);">Aucune donnée personnelle n'a été collectée durant l'exercice.</p>
+                <div class="sep"></div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        © 2025 ECAM — Campagne pédagogique contre le phishing • Exercice dans le cadre du cours de cybersécurité.
+    </footer>
+    <script>
+        const toggleBtn = document.getElementById('toggleQuiz');
+        const quizBody = document.getElementById('quizBody');
+        const checkBtn = document.getElementById('checkQuiz');
+        toggleBtn.addEventListener('click', () => {
+            quizBody.classList.toggle('hidden');
+            toggleBtn.textContent = (quizBody.classList.contains('hidden') ? '▶ Afficher le quiz' : '▼ Masquer le quiz');
+        });
+        checkBtn.addEventListener('click', () => {
+            document.querySelectorAll('.question').forEach(q => {
+                const ans = q.getAttribute('data-answer');
+                const chosen = q.querySelector('input[type=radio]:checked');
+                const fb = q.querySelector('.feedback');
+                if (!chosen) { fb.textContent = 'Choisis une réponse.'; fb.className = 'feedback ko'; return; }
+                if (chosen.value === ans) { fb.textContent = '✔ Bonne réponse'; fb.className = 'feedback ok'; }
+                else { fb.textContent = '✘ Mauvaise réponse'; fb.className = 'feedback ko'; }
+            });
+        });
+    </script>
 </body>
 </html>
